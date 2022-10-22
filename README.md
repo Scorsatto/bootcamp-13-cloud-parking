@@ -6,7 +6,7 @@ Instrutor: Sandro Giacomozzi
 
 ## Alterações:
 
-1- Adicione a dependência do Spring Boot devtools ao seu arquivo `pom.xml`.
+1- Adicione a dependência do Spring Boot devtools ao arquivo `pom.xml`.
 
     <dependency>
         <groupId>org.springframework.boot</groupId>
