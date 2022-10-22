@@ -1,13 +1,16 @@
 package one.digitalinnovation.cloud.parking.config;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
 
@@ -21,10 +24,24 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("one.digitalinnovation.cloud.parking"))
                 .build()
-                .apiInfo(metaData());
-                //.securityContexts(Arrays.asList(getSecurityContext()))
-                //.securitySchemes(Arrays.asList(basicAuthScheme()));
+                .apiInfo(metaData())
+                .securityContexts(Arrays.asList(getSecurityContext()))
+                .securitySchemes(Arrays.asList(basicAuthScheme()));
 
+    }
+
+    private SecurityScheme basicAuthScheme() {
+        return new BasicAuth("basicAuth");
+    }
+
+    private SecurityContext getSecurityContext() {
+        return SecurityContext.builder()
+                .securityReferences(Arrays.asList(basicAuthReference()))
+                .build();
+    }
+
+    private SecurityReference basicAuthReference() {
+        return new SecurityReference("basicAuth", new AuthorizationScope[0]);
     }
 
     private ApiInfo metaData() {
